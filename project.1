@@ -1,0 +1,210 @@
+#include <iostream>
+using namespace std;
+
+void line(){
+    //هذه الدالة غير مهمة واضفتها فقط لتنظيم المظهر
+    cout << "\n*********************************************************************************"<<endl;
+}
+
+bool prime(int i){ 
+    //دالة تتحقق هل العدد اولي ام لا
+    if (i<2) return false;
+        
+    for (int a = 2; a <= i/2 ; a++){
+        if (i%a==0) return false;
+    }
+    return true;
+}
+
+int power(int x, int i){
+    // x - العدد
+    // i - الاس
+    int num = 1;
+    for (int a = 1; a <= i; a++){
+        num = num * x;
+    }
+    return num;
+    
+}
+
+void menu(){
+    cout << "***What do you want to do?***\nenter: \n";
+    cout << "1 - to convert a binary number to decimal number."<<endl;
+    cout << "2 - to display a shape." << endl;
+    cout << "3 - to find the last prime number occurs before the number." << endl;
+    cout << "4 - to find minimum digit between the first and the last digits of a given integer." << endl;
+    cout << "5 - stop the programm." << endl;
+    
+}
+
+void convert(){
+    //دالة لتحويل من النظام الثنائي الى العشري
+    cout << "Enter the number that you want to convert: ";
+    long long a; 
+    cin >> a; 
+    long long a2 = a;
+    int num = 0, n = 0;
+    while (a != 0){
+        int r = a % 10;
+        a = a / 10;
+        
+        if (r != 0 && r != 1) {
+            cout << "__Invalid value!!__\nPlease enter a binary number: " << endl;
+            cin >> a; 
+            a2 = a; 
+            num = 0; 
+            n=0;
+            continue;
+            
+        }
+        
+        num = num + (r * power(2, n));
+        n++;
+    }
+    
+    cout<< endl << a2 << " = "<< num << endl;
+    
+}
+
+void shape(){
+    //دالة لدرسم شكل
+    //المثلث العلوي
+    for (int i=1; i<=5; i++){
+        int space = 5 - i;
+        int star = i*2 -1;
+        
+        if (i==5){
+            
+            for(int a2 = 1; a2 <= star; a2++){
+                
+            cout << "*";
+            
+        }
+            
+        }
+        
+        else {
+        
+        for(int a1 = 1; a1 <= space; a1++){
+            cout << " ";
+        }
+        
+        for(int a2 = 1; a2 <= star; a2++){
+            if (a2==1 || a2 == star) cout << "*";
+            
+            else cout << "#";   
+        }
+        }
+        cout << endl;
+    }
+    
+    
+    //المثلث السفلي
+    
+    int space = 1;
+    for (int i=4; i >= 1; i--) {
+        
+        for(int a1 = 1; a1 <= space; a1++){
+            cout << " "; 
+        }
+        space++;
+        int star = i*2 -1;
+        int num = 1;
+        
+        for (int a = 1; a <= star; a++){
+            
+            if (a==1 || a==star) {
+                cout << "*";
+            }
+            
+            else {
+                cout << num; 
+                num ++;
+            }
+        }
+        
+        cout << endl;
+    }
+    
+    
+}
+
+void primeNum() {
+    int num;
+    cout << "Input a number to find the last prime number occurs before the number: ";
+    cin >> num;
+    
+    --num;
+    
+    while (num <= 2 ){
+        cout << "__Invalid value!!__\n\nThe entered number should be equal to or grater than 9. \nplease, try again: ";
+        cin >> num; --num;
+    }
+    while (!prime(num)){
+        num = num -1;
+    } 
+    
+    cout << "the last prime number occur before the entered number is: " << num<< endl;
+}
+
+void findMinAndFactorial(){
+    cout << "Enter a num (the num should has a more that one dig): ";
+    long num; 
+    cin >> num;
+    int lastDigit, firstDigit ;
+    lastDigit = num %10;
+    num = num /10;
+    while (num != 0){
+        firstDigit  = num % 10;
+        num = num /10;
+    }
+    int min = (lastDigit > firstDigit ? firstDigit :lastDigit );
+    cout << "The minimum digit between the first and the last digits of a given integer is: " << min;
+    int factorial  = 1;
+    for (int i = 1; i <= min; i++) {
+        factorial  = factorial * i;
+    }
+    cout << "\nThe factorial of the minimum digit is: " << factorial << endl;
+}
+
+
+int main()
+{
+    menu();
+    int n; cin >> n;
+    while (n!=5) {
+    switch (n) {
+        case 1:
+        convert(); 
+        line();
+        cout << "\n***What do you want to do?***\n";
+        cin >> n; break;
+        
+        case 2:
+        shape(); 
+        line();
+        cout << "\n\n***What do you want to do?***\n";
+        cin >> n; break;
+        
+        case 3:
+        primeNum(); 
+        line();
+        cout << "\n***What do you want to do?***\n";
+        cin >> n; break;
+        
+        case 4:
+        findMinAndFactorial(); 
+        line();
+        cout << "\n\n***What do you want to do?***\n";
+        cin >> n; break;
+        
+        default: cout << "__invalid value!!__ \ntry again: ";
+        cin >> n; break;
+        
+    }
+    }
+    line();
+    cout << "\nHave a nice day!!"<< endl;
+    line();
+    return 0;
+}
